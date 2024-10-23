@@ -15,3 +15,7 @@ spring:
   liquibase:
     change-log: liquibase/changelog.yml
     driver-class-name: org.postgresql.Driver
+s3:
+  secret-key: ${S3_SECRET_KEY}
+  access-key: ${S3_SECRET_KEY}
+  bucket-name: ${S3_BUCKET_NAME}
