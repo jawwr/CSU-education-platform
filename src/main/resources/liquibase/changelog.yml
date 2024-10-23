@@ -2,3 +2,6 @@ databaseChangeLog:
   - include:
       file: "liquibase/1.0/changes.yml"
       relativeToChangelogFile: false
+  - include:
+      file: "liquibase/2.0/changes.yml"
+      relativeToChangelogFile: false

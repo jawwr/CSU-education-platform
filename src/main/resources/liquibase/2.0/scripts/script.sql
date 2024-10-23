@@ -1,0 +1,1 @@
+ALTER TABLE categories ALTER COLUMN image_id SET NOT NULL;
