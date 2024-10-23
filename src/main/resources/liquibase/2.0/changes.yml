@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2.0
+      author: arseniy
+      description: Create image_id not null
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: UTF-8
+            path: scripts/script.sql
+            relativeToChangelogFile: true
+            splitStatements: false
