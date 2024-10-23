@@ -4,6 +4,6 @@ public record CategoryDto(
         int id,
         String description,
         String name,
-        String image
+        String imageLink
 ) {
 }

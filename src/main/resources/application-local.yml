@@ -7,3 +7,9 @@ spring:
 
   jpa:
     show-sql: true
+
+s3:
+  secret-key: kueDXThyvYzPNt8t5HTJPUYuV2T8ebWvGpKAzfhQ
+  access-key: xqg2VlFtvGu4bnelcsS0
+  bucket-name: edu-app
+  endpoint: http://localhost:9000
