@@ -18,14 +18,15 @@ public class S3Service {
     private final S3Properties s3Properties;
 
     public String uploadImageToS3(MultipartFile file) {
+        String fileKey = getFileKey(file.getOriginalFilename());
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(s3Properties.getBucketName())
-                .key(file.getOriginalFilename())
+                .key(fileKey)
                 .contentType(file.getContentType())
                 .build();
         try {
             s3Client.putObject(request, RequestBody.fromBytes(file.getBytes()));
-            return file.getOriginalFilename();
+            return fileKey;
         } catch (Exception e) {
             log.error("Failed to upload file to s3", e);
             throw new RuntimeException(e);
@@ -43,5 +44,11 @@ public class S3Service {
             log.error("Failed to load file from s3", e);
             throw new RuntimeException(e);
         }
+    }
+
+    private String getFileKey(String originalFileName) {
+        return originalFileName.contains(".")
+                ? originalFileName.split("\\.")[0]
+                : originalFileName;
     }
 }
