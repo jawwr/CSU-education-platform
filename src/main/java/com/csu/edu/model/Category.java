@@ -25,6 +25,6 @@ public class Category {
     private String description;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id", nullable = false, columnDefinition = "NUMERIC")
+    @JoinColumn(name = "image_id", columnDefinition = "NUMERIC")
     private Image image;
 }

@@ -40,4 +40,10 @@ public class CategoryController {
         service.updateCategory(id, dto);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable("id") int id) {
+        service.deleteCategoryById(id);
+        return ResponseEntity.ok().build();
+    }
 }

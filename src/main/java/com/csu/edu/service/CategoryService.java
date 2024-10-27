@@ -50,8 +50,7 @@ public class CategoryService {
 
     @Transactional
     public void updateCategory(int id, UpdateCategoryDto dto) {
-        Category savedCategory = repository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+        Category savedCategory = findByIdOrElseThrow(id);
 
         if (dto.imageFile() == null && dto.fileLink() == null) {
             throw new WrongRequestException("Category must have image file or exists file link");
@@ -62,5 +61,18 @@ public class CategoryService {
 
         mapper.updateCategory(savedCategory, dto, image);
         repository.save(savedCategory);
+    }
+
+    @Transactional
+    public void deleteCategoryById(int id) {
+        Category category = repository.findCategoryWithImageById(id)
+                .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+        imageService.deleteImageByFileLink(category.getImage().getLink());
+        repository.deleteCategoryById(id);
+    }
+
+    public Category findByIdOrElseThrow(int id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
     }
 }
