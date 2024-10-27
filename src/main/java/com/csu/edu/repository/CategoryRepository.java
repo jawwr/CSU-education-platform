@@ -2,6 +2,7 @@ package com.csu.edu.repository;
 
 import com.csu.edu.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -23,4 +24,11 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
             JOIN FETCH c.image i
             """)
     List<Category> findAllWithImage();
+
+    @Modifying
+    @Query(value = """
+            DELETE FROM categories
+            WHERE id = :id
+            """, nativeQuery = true)
+    void deleteCategoryById(@Param("id") int id);
 }

@@ -1,6 +1,7 @@
 package com.csu.edu.service;
 
 import com.csu.edu.exception.DataNotFoundException;
+import com.csu.edu.exception.WrongRequestException;
 import com.csu.edu.model.Image;
 import com.csu.edu.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,11 @@ public class ImageService {
     public Image getImageByFileKey(String fileKey) {
         return repository.findImageByLink(fileKey)
                 .orElseThrow(() -> new DataNotFoundException("Image with fileKey '" + fileKey + "' doesn't exists"));
+    }
+
+    @Transactional
+    public void deleteImageByFileLink(String fileLink) {
+        s3Service.deleteImageByFileLink(fileLink);
+        repository.deleteByLink(fileLink);
     }
 }
