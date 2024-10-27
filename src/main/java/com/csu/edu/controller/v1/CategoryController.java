@@ -1,8 +1,9 @@
 package com.csu.edu.controller.v1;
 
-import com.csu.edu.dto.CategoryDto;
-import com.csu.edu.dto.CategoryInfo;
-import com.csu.edu.dto.CreateCategoryDto;
+import com.csu.edu.dto.category.CategoryDto;
+import com.csu.edu.dto.category.CategoryInfo;
+import com.csu.edu.dto.category.CreateCategoryDto;
+import com.csu.edu.dto.category.UpdateCategoryDto;
 import com.csu.edu.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,14 @@ public class CategoryController {
     }
 
     @PostMapping(consumes = MULTIPART_FORM_DATA)
-    public ResponseEntity<CategoryDto> createCategory(@ModelAttribute CreateCategoryDto dto) {
+    public ResponseEntity<?> createCategory(@ModelAttribute CreateCategoryDto dto) {
         service.createCategory(dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/{id}", consumes = MULTIPART_FORM_DATA)
+    public ResponseEntity<?> updateCategory(@PathVariable("id") int id, @ModelAttribute UpdateCategoryDto dto) {
+        service.updateCategory(id, dto);
         return ResponseEntity.ok().build();
     }
 }
