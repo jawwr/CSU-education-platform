@@ -41,7 +41,7 @@ class CategoryControllerTest extends TestContainerBaseTest {
                         jsonPath("$").isNotEmpty(),
                         jsonPath("$.[0].id").isNumber(),
                         jsonPath("$.[0].name").value(categoryName),
-                        jsonPath("$.[0].imageLink").value(imageLink)
+                        jsonPath("$.[0].image").value(imageLink)
                 );
     }
 
