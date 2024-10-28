@@ -1,6 +1,6 @@
 package com.csu.edu.controller.v1;
 
-import com.csu.edu.configuration.BaseTests;
+import com.csu.edu.configuration.TestContainerBaseTest;
 import com.csu.edu.data_creator.CategoryDataCreator;
 import com.csu.edu.model.Category;
 import com.csu.edu.model.Image;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CategoryControllerTest extends BaseTests {
+class CategoryControllerTest extends TestContainerBaseTest {
 
     @Autowired
     private CategoryDataCreator dataCreator;
