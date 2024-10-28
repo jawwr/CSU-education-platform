@@ -41,7 +41,7 @@ class CategoryControllerTest extends TestContainerBaseTest {
                         jsonPath("$").isNotEmpty(),
                         jsonPath("$.[0].id").isNumber(),
                         jsonPath("$.[0].name").value(categoryName),
-                        jsonPath("$.[0].description").value(description)
+                        jsonPath("$.[0].imageLink").value(imageLink)
                 );
     }
 
@@ -68,7 +68,7 @@ class CategoryControllerTest extends TestContainerBaseTest {
                         jsonPath("$.id").isNumber(),
                         jsonPath("$.name").value(categoryName),
                         jsonPath("$.description").value(description),
-                        jsonPath("$.image").value(imageLink)
+                        jsonPath("$.imageLink").value(imageLink)
                 );
     }
 
@@ -95,7 +95,7 @@ class CategoryControllerTest extends TestContainerBaseTest {
                         status().isUnprocessableEntity(),
                         jsonPath("$").isNotEmpty(),
                         jsonPath("$.message").isString(),
-                        jsonPath("$.message").value("Category with id '" + randomId + "' not found")
+                        jsonPath("$.message").value("Category with id '" + randomId + "' doesn't exist")
                 );
     }
 }
