@@ -19,3 +19,4 @@ s3:
   secret-key: ${S3_SECRET_KEY}
   access-key: ${S3_SECRET_KEY}
   bucket-name: ${S3_BUCKET_NAME}
+  endpoint: ${S3_ENDPOINT}

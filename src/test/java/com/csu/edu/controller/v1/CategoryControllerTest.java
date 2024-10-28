@@ -1,6 +1,6 @@
 package com.csu.edu.controller.v1;
 
-import com.csu.edu.configuration.BaseTests;
+import com.csu.edu.configuration.TestContainerBaseTest;
 import com.csu.edu.data_creator.CategoryDataCreator;
 import com.csu.edu.model.Category;
 import com.csu.edu.model.Image;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CategoryControllerTest extends BaseTests {
+class CategoryControllerTest extends TestContainerBaseTest {
 
     @Autowired
     private CategoryDataCreator dataCreator;
@@ -41,7 +41,7 @@ class CategoryControllerTest extends BaseTests {
                         jsonPath("$").isNotEmpty(),
                         jsonPath("$.[0].id").isNumber(),
                         jsonPath("$.[0].name").value(categoryName),
-                        jsonPath("$.[0].description").value(description)
+                        jsonPath("$.[0].imageLink").value(imageLink)
                 );
     }
 
@@ -68,7 +68,7 @@ class CategoryControllerTest extends BaseTests {
                         jsonPath("$.id").isNumber(),
                         jsonPath("$.name").value(categoryName),
                         jsonPath("$.description").value(description),
-                        jsonPath("$.image").value(imageLink)
+                        jsonPath("$.imageLink").value(imageLink)
                 );
     }
 
@@ -95,7 +95,7 @@ class CategoryControllerTest extends BaseTests {
                         status().isUnprocessableEntity(),
                         jsonPath("$").isNotEmpty(),
                         jsonPath("$.message").isString(),
-                        jsonPath("$.message").value("Category with id '" + randomId + "' not found")
+                        jsonPath("$.message").value("Category with id '" + randomId + "' doesn't exist")
                 );
     }
 }
