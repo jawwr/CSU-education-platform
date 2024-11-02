@@ -1,4 +1,4 @@
-name: build
+name: build and deploy
 on:
   push:
     branches: [ "master" ]
@@ -21,3 +21,24 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn clean package
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            cd ${{ secrets.PROJECT_FOLDER }}
+            git checkout master
+            git pull origin master
+            docker-compose stop
+            docker-compose up --build -d
