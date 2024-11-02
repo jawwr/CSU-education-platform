@@ -5,10 +5,11 @@ on:
 
 jobs:
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
