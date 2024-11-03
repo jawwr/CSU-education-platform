@@ -14,6 +14,8 @@ services:
     container_name: edu-minio
     volumes:
       - ./storage/minio:/data
+    env_file:
+      - .env
     ports:
       - "9000:9000"
       - "9001:9001"
