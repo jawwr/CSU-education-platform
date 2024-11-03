@@ -24,9 +24,11 @@ public interface CategoryMapper {
     @Mapping(target = "imageLink", source = "image.link")
     CategoryDto toCategoryDto(Category category);
 
+    @Mapping(target = "themes", ignore = true)
     @Mapping(target = "id", ignore = true)
     Category fromCreateCategoryDto(CreateCategoryDto dto, Image image);
 
+    @Mapping(target = "themes", ignore = true)
     @Mapping(target = "name", source = "dto.name")
     @Mapping(target = "description", source = "dto.description")
     @Mapping(target = "id", ignore = true)
