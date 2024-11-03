@@ -1,13 +1,11 @@
 package com.csu.edu.controller.v1;
 
+import com.csu.edu.dto.themes.ThemeDto;
 import com.csu.edu.dto.themes.ThemeInfo;
 import com.csu.edu.service.ThemeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,5 +19,10 @@ public class ThemeController {
     @GetMapping
     public ResponseEntity<List<ThemeInfo>> getAllThemes(@RequestParam Long categoryId) {
         return ResponseEntity.ok(service.getAllThemes(categoryId));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ThemeDto> getThemeById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.getThemeById(id));
     }
 }

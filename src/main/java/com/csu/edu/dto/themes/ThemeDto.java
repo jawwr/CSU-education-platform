@@ -1,6 +1,6 @@
-package com.csu.edu.dto.category;
+package com.csu.edu.dto.themes;
 
-public record CategoryDto(
+public record ThemeDto(
         Long id,
         String description,
         String name,
