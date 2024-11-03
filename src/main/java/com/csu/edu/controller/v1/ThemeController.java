@@ -1,5 +1,6 @@
 package com.csu.edu.controller.v1;
 
+import com.csu.edu.dto.themes.CreateThemeDto;
 import com.csu.edu.dto.themes.ThemeDto;
 import com.csu.edu.dto.themes.ThemeInfo;
 import com.csu.edu.service.ThemeService;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
 
 @RestController
 @RequestMapping("/api/v1/themes")
@@ -24,5 +27,11 @@ public class ThemeController {
     @GetMapping("/{id}")
     public ResponseEntity<ThemeDto> getThemeById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getThemeById(id));
+    }
+
+    @PostMapping(consumes = MULTIPART_FORM_DATA)
+    public ResponseEntity<?> createTheme(@ModelAttribute CreateThemeDto createThemeDto) {
+        service.createTheme(createThemeDto);
+        return ResponseEntity.ok().build();
     }
 }
