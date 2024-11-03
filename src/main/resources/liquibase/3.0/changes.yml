@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3.0
+      author: arseniy
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: UTF-8
+            path: scripts/script.sql
+            relativeToChangelogFile: true
+            splitStatements: false
