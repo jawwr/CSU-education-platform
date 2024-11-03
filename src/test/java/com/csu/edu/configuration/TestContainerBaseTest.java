@@ -1,13 +1,11 @@
 package com.csu.edu.configuration;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.utility.DockerImageName;
 
 import java.util.Map;
 
@@ -48,11 +46,5 @@ public class TestContainerBaseTest extends BaseTests {
         registry.add("spring.datasource.url", POSTGRES_CONTAINER::getJdbcUrl);
         registry.add("DB_USERNAME", POSTGRES_CONTAINER::getUsername);
         registry.add("DB_PASSWORD", POSTGRES_CONTAINER::getPassword);
-    }
-
-    private static DockerImageName imageNameOf(String name) {
-        String compatible = name.replace("(:[\\d.]+)|(:latest)", "");
-        return DockerImageName.parse(name)
-                .asCompatibleSubstituteFor(compatible);
     }
 }
