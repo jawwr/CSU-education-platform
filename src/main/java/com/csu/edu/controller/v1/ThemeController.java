@@ -3,6 +3,7 @@ package com.csu.edu.controller.v1;
 import com.csu.edu.dto.themes.CreateThemeDto;
 import com.csu.edu.dto.themes.ThemeDto;
 import com.csu.edu.dto.themes.ThemeInfo;
+import com.csu.edu.dto.themes.UpdateThemeDto;
 import com.csu.edu.service.ThemeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,12 @@ public class ThemeController {
     @PostMapping(consumes = MULTIPART_FORM_DATA)
     public ResponseEntity<?> createTheme(@ModelAttribute CreateThemeDto createThemeDto) {
         service.createTheme(createThemeDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/{id}", consumes = MULTIPART_FORM_DATA)
+    public ResponseEntity<?> updateTheme(@PathVariable("id") Long id, @ModelAttribute UpdateThemeDto updateThemeDto) {
+        service.updateTheme(id, updateThemeDto);
         return ResponseEntity.ok().build();
     }
 }

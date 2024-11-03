@@ -3,6 +3,7 @@ package com.csu.edu.service;
 import com.csu.edu.dto.themes.CreateThemeDto;
 import com.csu.edu.dto.themes.ThemeDto;
 import com.csu.edu.dto.themes.ThemeInfo;
+import com.csu.edu.dto.themes.UpdateThemeDto;
 import com.csu.edu.exception.DataNotFoundException;
 import com.csu.edu.mapper.ThemeMapper;
 import com.csu.edu.model.Category;
@@ -46,6 +47,18 @@ public class ThemeService {
         Category category = categoryService.findByIdOrElseThrow(createDto.categoryId());
         Image image = imageService.createImage(createDto.imageFile());
         Theme theme = mapper.fromCreateThemeDto(createDto, category, image);
+        repository.save(theme);
+    }
+
+    @Transactional
+    public void updateTheme(Long id, UpdateThemeDto updateThemeDto) {
+        Theme theme = repository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));;
+        Category category = categoryService.findByIdOrElseThrow(updateThemeDto.categoryId());
+        Image image = updateThemeDto.imageFile() != null
+                ? imageService.createImage(updateThemeDto.imageFile())
+                : imageService.getImageByFileKey(updateThemeDto.fileLink());
+        mapper.fromUpdateThemeDto(theme, updateThemeDto, category, image);
         repository.save(theme);
     }
 }
