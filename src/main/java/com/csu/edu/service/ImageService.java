@@ -1,12 +1,12 @@
 package com.csu.edu.service;
 
 import com.csu.edu.exception.DataNotFoundException;
-import com.csu.edu.exception.WrongRequestException;
 import com.csu.edu.model.Image;
 import com.csu.edu.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 

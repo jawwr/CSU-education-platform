@@ -36,9 +36,8 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public CategoryDto getCategoryById(int id) {
-        return repository.findCategoryWithImageById(id)
-                .map(mapper::toCategoryDto)
-                .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+        Category category = findCategoryWithImageByIdOrElseThrow(id);
+        return mapper.toCategoryDto(category);
     }
 
     @Transactional
@@ -65,14 +64,18 @@ public class CategoryService {
 
     @Transactional
     public void deleteCategoryById(int id) {
-        Category category = repository.findCategoryWithImageById(id)
-                .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+        Category category = findCategoryWithImageByIdOrElseThrow(id);
         imageService.deleteImageByFileLink(category.getImage().getLink());
         repository.deleteCategoryById(id);
     }
 
     public Category findByIdOrElseThrow(int id) {
         return repository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+    }
+
+    private Category findCategoryWithImageByIdOrElseThrow(int id) {
+        return repository.findCategoryWithImageById(id)
                 .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
     }
 }
