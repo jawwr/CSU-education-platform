@@ -37,9 +37,8 @@ public class ThemeService {
 
     @Transactional(readOnly = true)
     public ThemeDto getThemeById(Long id) {
-        return repository.findByIdWithImage(id)
-                .map(mapper::toThemeDto)
-                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+        Theme theme = findByIdWithImageOrElseThrow(id);
+        return mapper.toThemeDto(theme);
     }
 
     @Transactional
@@ -53,12 +52,24 @@ public class ThemeService {
     @Transactional
     public void updateTheme(Long id, UpdateThemeDto updateThemeDto) {
         Theme theme = repository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));;
+                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));
         Category category = categoryService.findByIdOrElseThrow(updateThemeDto.categoryId());
         Image image = updateThemeDto.imageFile() != null
                 ? imageService.createImage(updateThemeDto.imageFile())
                 : imageService.getImageByFileKey(updateThemeDto.fileLink());
         mapper.fromUpdateThemeDto(theme, updateThemeDto, category, image);
         repository.save(theme);
+    }
+
+    @Transactional
+    public void deleteThemeById(Long id) {
+        Theme theme = findByIdWithImageOrElseThrow(id);
+        imageService.deleteImageByFileLink(theme.getImage().getLink());
+        repository.deleteThemeById(id);
+    }
+
+    private Theme findByIdWithImageOrElseThrow(Long id) {
+        return repository.findByIdWithImage(id)
+                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));
     }
 }

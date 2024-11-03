@@ -41,4 +41,10 @@ public class ThemeController {
         service.updateTheme(id, updateThemeDto);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTheme(@PathVariable("id") Long id) {
+        service.deleteThemeById(id);
+        return ResponseEntity.ok().build();
+    }
 }
