@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3.1
+      author: arseniy
+      description: Add theory
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: UTF-8
+            path: scripts/script.sql
+            relativeToChangelogFile: true
+            splitStatements: false

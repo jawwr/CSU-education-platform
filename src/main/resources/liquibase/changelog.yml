@@ -8,3 +8,6 @@ databaseChangeLog:
   - include:
       file: "liquibase/3.0/changes.yml"
       relativeToChangelogFile: false
+  - include:
+      file: "liquibase/3.1/changes.yml"
+      relativeToChangelogFile: false
