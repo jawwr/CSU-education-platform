@@ -51,8 +51,7 @@ public class ThemeService {
 
     @Transactional
     public void updateTheme(Long id, UpdateThemeDto updateThemeDto) {
-        Theme theme = repository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+        Theme theme = findThemeByIdOrElseThrow(id);
         Category category = categoryService.findByIdOrElseThrow(updateThemeDto.categoryId());
         Image image = updateThemeDto.imageFile() != null
                 ? imageService.createImage(updateThemeDto.imageFile())
@@ -68,7 +67,12 @@ public class ThemeService {
         repository.deleteThemeById(id);
     }
 
-    private Theme findByIdWithImageOrElseThrow(Long id) {
+    public Theme findThemeByIdOrElseThrow(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));
+    }
+
+    public Theme findByIdWithImageOrElseThrow(Long id) {
         return repository.findByIdWithImage(id)
                 .orElseThrow(() -> new DataNotFoundException(THEME_DOES_NOT_EXIST_MESSAGE.formatted(id)));
     }
