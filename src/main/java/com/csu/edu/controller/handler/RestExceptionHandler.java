@@ -4,6 +4,7 @@ import com.csu.edu.dto.ExceptionMessage;
 import com.csu.edu.exception.DataNotFoundException;
 import com.csu.edu.exception.WrongRequestException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,12 @@ public class RestExceptionHandler {
     public ResponseEntity<ExceptionMessage> handleWrongRequestException(Exception e) {
         log.error(e.getMessage());
         return ResponseEntity.badRequest().body(new ExceptionMessage(e.getMessage()));
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<ExceptionMessage> handleDataAccessException(DataAccessException e) {
+        log.error(e.getLocalizedMessage());
+        return ResponseEntity.internalServerError().body(new ExceptionMessage("SQL error while handling query"));
     }
 
     @ExceptionHandler(Exception.class)
