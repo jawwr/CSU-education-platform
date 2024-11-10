@@ -69,6 +69,7 @@ class CategoryControllerTest extends TestContainerBaseTest {
         miniGame.setChoices(choices);
         miniGame.setQuestion(RandomStringUtils.randomAlphabetic(10));
         miniGame.setName(miniGameName);
+        miniGame.setImage(image);
 
         Category category = new Category();
         miniGame.setCategory(category);
