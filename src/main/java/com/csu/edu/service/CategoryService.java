@@ -75,7 +75,7 @@ public class CategoryService {
     }
 
     private Category findCategoryWithImageByIdOrElseThrow(int id) {
-        return repository.findCategoryWithImageById(id)
+        return repository.findCategoryWithImageAndMiniGameById(id)
                 .orElseThrow(() -> new DataNotFoundException(CATEGORY_DOES_NOT_EXIST_MESSAGE.formatted(id)));
     }
 }
