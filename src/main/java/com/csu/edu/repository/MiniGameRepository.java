@@ -13,7 +13,7 @@ public interface MiniGameRepository extends JpaRepository<MiniGame, Long> {
             SELECT mg
             FROM MiniGame mg
             JOIN FETCH mg.image i
-            JOIN FETCH mg.choices ch
+            LEFT JOIN FETCH mg.choices ch
             WHERE mg.id = :id
             """)
     Optional<MiniGame> findMiniGameWithImageAndChoicesById(@Param("id") Long id);
