@@ -1,7 +1,8 @@
 package com.csu.edu.service;
 
-import com.csu.edu.dto.theory.CreateTheoryDto;
+import com.csu.edu.dto.theory.TheoryRequestDto;
 import com.csu.edu.dto.theory.TheoryDto;
+import com.csu.edu.exception.DataNotFoundException;
 import com.csu.edu.mapper.TheoryMapper;
 import com.csu.edu.model.Image;
 import com.csu.edu.model.Theme;
@@ -30,10 +31,25 @@ public class TheoryService {
     }
 
     @Transactional
-    public void createTheory(CreateTheoryDto createTheoryDto) {
-        Theme theme = themeService.findThemeByIdOrElseThrow(createTheoryDto.themeId());
-        Image image = imageService.createImage(createTheoryDto.imageFile());
-        Theory theory = mapper.fromCreateTheoryDto(createTheoryDto, theme, image);
+    public void createTheory(TheoryRequestDto theoryRequestDto) {
+        Theme theme = themeService.findThemeByIdOrElseThrow(theoryRequestDto.themeId());
+        Image image = imageService.createImage(theoryRequestDto.imageFile());
+        Theory theory = mapper.fromCreateTheoryDto(theoryRequestDto, theme, image);
         repository.save(theory);
+    }
+
+    @Transactional
+    public void updateTheory(Long id, TheoryRequestDto theoryDto) {
+        Theory theory = repository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Theory with id " + id + " not found"));
+        Theme theme = themeService.findThemeByIdOrElseThrow(theoryDto.themeId());
+        Image image = imageService.createImage(theoryDto.imageFile());
+        mapper.updateFromTheoryRequestDto(theory, theoryDto, theme, image);
+        repository.save(theory);
+    }
+
+    @Transactional
+    public void deleteTheory(Long id) {
+        repository.deleteById(id);
     }
 }
