@@ -9,7 +9,6 @@ import com.csu.edu.mapper.MiniGameMapper;
 import com.csu.edu.model.Category;
 import com.csu.edu.model.Image;
 import com.csu.edu.model.MiniGame;
-import com.csu.edu.model.MiniGameChoice;
 import com.csu.edu.repository.MiniGameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,19 +20,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MiniGameService {
 
-    private static final String MINI_GAME_NOT_EXISTS_MESSAGE = "Mini game with id '%s' doesn't exist";
-
     private final MiniGameRepository repository;
     private final MiniGameMapper mapper;
-    private final ChoiceService choiceService;
     private final CategoryService categoryService;
     private final ImageService imageService;
 
     @Transactional(readOnly = true)
-    public MiniGameDto getMiniGameById(Long id) {
-        return repository.findMiniGameWithImageAndChoicesById(id)
+    public List<MiniGameDto> getMiniGameByCategoryId(Long categoryId) {
+        return repository.findMiniGameWithImageAndChoicesByCategoryId(categoryId)
+                .stream()
                 .map(mapper::toMiniGameDto)
-                .orElseThrow(() -> new DataNotFoundException(MINI_GAME_NOT_EXISTS_MESSAGE.formatted(id)));
+                .toList();
     }
 
     @Transactional
@@ -43,15 +40,5 @@ public class MiniGameService {
         MiniGame miniGame = mapper.fromCreateMiniGameDto(dto, category, image);
 
         repository.save(miniGame);
-    }
-
-    private void validateChoices(List<CreateChoiceDto> choices) {
-        if (choices == null || choices.isEmpty()) {
-            throw new WrongRequestException("Choice must not be null or empty");
-        }
-        int correctCount = choices.stream().filter(CreateChoiceDto::isCorrect).toList().size();
-        if (correctCount != 1) {
-            throw new WrongRequestException("The question must contain one correct answer");
-        }
     }
 }
