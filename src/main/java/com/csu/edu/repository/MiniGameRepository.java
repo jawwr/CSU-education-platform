@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface MiniGameRepository extends JpaRepository<MiniGame, Long> {
 
@@ -14,7 +14,7 @@ public interface MiniGameRepository extends JpaRepository<MiniGame, Long> {
             FROM MiniGame mg
             JOIN FETCH mg.image i
             LEFT JOIN FETCH mg.choices ch
-            WHERE mg.id = :id
+            WHERE mg.category.id = :id
             """)
-    Optional<MiniGame> findMiniGameWithImageAndChoicesById(@Param("id") Long id);
+    List<MiniGame> findMiniGameWithImageAndChoicesByCategoryId(@Param("id") Long categoryId);
 }

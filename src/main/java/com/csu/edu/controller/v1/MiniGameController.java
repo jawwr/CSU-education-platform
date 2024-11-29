@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
@@ -16,9 +18,9 @@ public class MiniGameController {
 
     private final MiniGameService service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MiniGameDto> getMiniGame(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.getMiniGameById(id));
+    @GetMapping
+    public ResponseEntity<List<MiniGameDto>> getMiniGame(@RequestParam Long categoryId) {
+        return ResponseEntity.ok(service.getMiniGameByCategoryId(categoryId));
     }
 
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
