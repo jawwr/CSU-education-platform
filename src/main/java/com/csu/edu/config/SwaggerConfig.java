@@ -10,8 +10,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("JOYAS-STOCK API Docs")
-                        .description("JOYAS-STOCK REST API documentation")
-                        .version("v1.0.0"));
+                .info(new Info().title("Education app API")
+                        .description("Education app")
+                        .version("v3.0.0"));
     }
 }

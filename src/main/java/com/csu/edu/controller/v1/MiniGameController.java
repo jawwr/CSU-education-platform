@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
-
 @RestController
 @RequestMapping("/api/v1/mini-games")
 @RequiredArgsConstructor
@@ -23,8 +21,8 @@ public class MiniGameController {
         return ResponseEntity.ok(service.getMiniGameByCategoryId(categoryId));
     }
 
-    @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> createMiniGame(@ModelAttribute("miniGame") CreateMiniGameDto dto,
+    @PostMapping
+    public ResponseEntity<?> createMiniGame(@RequestBody CreateMiniGameDto dto,
                                             @RequestParam("categoryId") Integer categoryId) {
         service.createMiniGame(categoryId, dto);
         return ResponseEntity.ok().build();
