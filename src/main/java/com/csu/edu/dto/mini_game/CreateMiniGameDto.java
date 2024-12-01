@@ -1,10 +1,11 @@
 package com.csu.edu.dto.mini_game;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
 
 public record CreateMiniGameDto(
         String name,
         String question,
-        MultipartFile imageFile
+        String imageLink,
+        List<CreateChoiceDto> choices
 ) {
 }

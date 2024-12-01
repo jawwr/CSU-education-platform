@@ -21,7 +21,7 @@ public class ChoiceService {
     public List<MiniGameChoice> createChoices(List<CreateChoiceDto> dtos) {
         return dtos.stream()
                 .map(choice -> {
-                    Image image = imageService.createImage(choice.imageFile());
+                    Image image = imageService.getImageByFileKey(choice.imageLink());
                     return mapper.fromCreateChoiceDto(choice, image);
                 })
                 .toList();
