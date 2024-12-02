@@ -51,8 +51,8 @@ public class MiniGameService {
             throw new WrongRequestException("Mini game must have at least one choice");
         }
         int correctAnswersCount = choices.stream().filter(CreateChoiceDto::isCorrect).toList().size();
-        if (correctAnswersCount > 1) {
-            throw new WrongRequestException("Mini game must have only one correct choice");
+        if (correctAnswersCount == 0) {
+            throw new WrongRequestException("Mini game must have at least one correct answer");
         }
     }
 }
