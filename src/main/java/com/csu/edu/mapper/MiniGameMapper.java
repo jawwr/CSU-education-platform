@@ -10,6 +10,7 @@ import com.csu.edu.model.MiniGame;
 import com.csu.edu.model.MiniGameChoice;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -27,4 +28,15 @@ public interface MiniGameMapper {
     @Mapping(target = "category", source = "category")
     @Mapping(target = "choices", source = "choices")
     MiniGame fromCreateMiniGameDto(CreateMiniGameDto dto, Category category, Image image, List<MiniGameChoice> choices);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "name", source = "dto.name")
+    @Mapping(target = "image", source = "image")
+    @Mapping(target = "category", source = "category")
+    @Mapping(target = "choices", source = "choices")
+    void updateFromCreateMiniGameDto(@MappingTarget MiniGame miniGame,
+                                     CreateMiniGameDto dto,
+                                     Category category,
+                                     Image image,
+                                     List<MiniGameChoice> choices);
 }

@@ -3,6 +3,7 @@ package com.csu.edu.service;
 import com.csu.edu.dto.mini_game.CreateChoiceDto;
 import com.csu.edu.dto.mini_game.CreateMiniGameDto;
 import com.csu.edu.dto.mini_game.MiniGameDto;
+import com.csu.edu.exception.DataNotFoundException;
 import com.csu.edu.exception.WrongRequestException;
 import com.csu.edu.mapper.MiniGameMapper;
 import com.csu.edu.model.Category;
@@ -54,5 +55,26 @@ public class MiniGameService {
         if (correctAnswersCount == 0) {
             throw new WrongRequestException("Mini game must have at least one correct answer");
         }
+    }
+
+    @Transactional
+    public void updateMiniGame(long id, int categoryId, CreateMiniGameDto dto) {
+        MiniGame miniGame = repository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Mini game with id " + id + " not found"));
+        Category category = categoryService.findByIdOrElseThrow(categoryId);
+        Image image = imageService.getImageByFileKey(dto.imageLink());
+        validateChoice(dto.choices());
+        List<MiniGameChoice> choices = choiceService.createChoices(dto.choices());
+        choiceService.deleteChoices(miniGame.getChoices());
+        miniGame.setChoices(null);
+        mapper.updateFromCreateMiniGameDto(miniGame, dto, category, image, choices);
+        choices.forEach(c -> c.setMiniGame(miniGame));
+
+        repository.save(miniGame);
+    }
+
+    @Transactional
+    public void deleteMiniGame(Long id) {
+        repository.deleteById(id);
     }
 }

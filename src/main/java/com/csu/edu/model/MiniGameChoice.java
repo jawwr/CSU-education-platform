@@ -24,7 +24,7 @@ public class MiniGameChoice {
     @Column(name = "isCorrect", nullable = false)
     private boolean isCorrect;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id", columnDefinition = "NUMERIC")
     private Image image;
 
