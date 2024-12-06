@@ -27,4 +27,18 @@ public class MiniGameController {
         service.createMiniGame(categoryId, dto);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMiniGame(@PathVariable Long id,
+                                            @RequestBody CreateMiniGameDto dto,
+                                            @RequestParam("categoryId") Integer categoryId) {
+        service.updateMiniGame(id, categoryId, dto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMiniGame(@PathVariable Long id) {
+        service.deleteMiniGame(id);
+        return ResponseEntity.ok().build();
+    }
 }

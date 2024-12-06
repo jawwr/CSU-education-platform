@@ -1,14 +1,16 @@
 package com.csu.edu.service;
 
+import com.csu.edu.dto.image.ImageDto;
 import com.csu.edu.exception.DataNotFoundException;
 import com.csu.edu.model.Image;
 import com.csu.edu.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -35,5 +37,10 @@ public class ImageService {
     public void deleteImageByFileLink(String fileLink) {
         s3Service.deleteImageByFileLink(fileLink);
         repository.deleteByLink(fileLink);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ImageDto> getAllImages() {
+        return repository.findAll().stream().map(i -> new ImageDto(i.getId(), i.getLink())).toList();
     }
 }

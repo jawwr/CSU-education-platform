@@ -1,6 +1,7 @@
 package com.csu.edu.controller.v1;
 
 import com.csu.edu.dto.image.CreateImageDto;
+import com.csu.edu.dto.image.ImageDto;
 import com.csu.edu.service.ImageService;
 import com.csu.edu.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
@@ -30,5 +33,10 @@ public class ImageController {
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadImage(@ModelAttribute CreateImageDto image) {
         return ResponseEntity.ok(imageService.createImage(image.imageFile()).getLink());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ImageDto>> getAllImages() {
+        return ResponseEntity.ok(imageService.getAllImages());
     }
 }
