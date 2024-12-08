@@ -14,7 +14,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
             SELECT c
             FROM Category c
             JOIN FETCH c.image i
-            LEFT JOIN FETCH c.miniGames
+            LEFT JOIN FETCH c.miniGames mg
+            LEFT JOIN FETCH c.superGames sg
             WHERE c.id = :id
             """)
     Optional<Category> findCategoryWithImageAndMiniGameById(@Param("id") int id);
