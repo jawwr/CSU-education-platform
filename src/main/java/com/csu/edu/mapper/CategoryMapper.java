@@ -11,7 +11,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(config = MapperConfig.class, uses = {MiniGameMapper.class})
+@Mapper(config = MapperConfig.class, uses = {MiniGameMapper.class, SuperGameMapper.class})
 public interface CategoryMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")

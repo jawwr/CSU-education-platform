@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5.0
+      author: arseniy
+      description: Add super games
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: UTF-8
+            path: scripts/script.sql
+            relativeToChangelogFile: true
+            splitStatements: false

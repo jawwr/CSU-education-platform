@@ -11,8 +11,8 @@ import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -73,7 +73,7 @@ class CategoryControllerTest extends TestContainerBaseTest {
 
         Category category = new Category();
         miniGame.setCategory(category);
-        category.setMiniGames(List.of(miniGame));
+        category.setMiniGames(Set.of(miniGame));
         category.setDescription(description);
         category.setName(categoryName);
         category.setImage(image);
